@@ -1,9 +1,8 @@
 import express from "express"
-import { configDotenv } from "dotenv"
+import "dotenv/config"
 import cors from "cors"
 import http from "http"
-import { log } from "console"
-import { console } from "inspector"
+import { connectDB } from "./lib/db.js"
 
 //create express app and http server
 
@@ -18,6 +17,10 @@ app.use(cors());
 //routes
 app.use("/api/status",(req,res)=>res.send('Server is live'));
 
+
+//connect to db
+await connectDB();
+
 const PORT = process.env.PORT || 5000
 
-server.listen(PORT,()=>console.log('server is running on port'  + PORT))
+server.listen(PORT,()=>console.log('server is running on port'  + " " + PORT))
