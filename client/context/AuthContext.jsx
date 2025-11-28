@@ -30,6 +30,30 @@ export const AuthProvider = ({children})=>{
         }
     }
 
+        //login fn to handle user auth and socket conn
+
+    const login = async(state,credentials) =>{
+        try{
+            const {data} = await axios.post(`/api/auth/${state}`,credentials);
+            if(data.success){
+                setAuthUser(data.userData);
+                connectSocket(data.userData);
+                axios.defaults.headers.common["token"] = data.token;
+                setToken(data.token);
+                localStorage.setItem("token",data.token);
+                toast.success(data.message)
+            }
+            else{
+                toast.error(data.message)
+            }
+        }catch(error){
+            toast.error(error.message)
+        }
+    }
+
+    
+
+
     //connect socket fn to handle socket conn and online user updates
     const connectSocket = (userData)=>{
         if(!userData || socket?.connected) return true;
