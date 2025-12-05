@@ -65,8 +65,15 @@ export const AuthProvider = ({children})=>{
 
     //update profile fn to handle user profile updates
 
-    const updateProfile =async()=>{
+    const updateProfile = async(body)=>{
         try{
+             if (!token) {
+      toast.error("No token found, please login again.");
+      return;
+    }
+
+    axios.defaults.headers.common["token"] = token;
+    
             const {data} = await axios.put("/api/auth/update-profile",body);
             if(data.success){
                 setAuthUser(data.user)

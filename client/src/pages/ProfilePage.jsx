@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext'
 
 const ProfilePage = () => {
 
-  const{authUser,updadteProfile} = useContext(AuthContext) 
+  const{authUser,updateProfile} = useContext(AuthContext) 
 
   const [selectedImg, setSelectedImg] = useState(null)
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ const ProfilePage = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault();
     if(!selectedImg){
-      await updadteProfile({fullName: name ,bio});
+      await updateProfile({fullName: name ,bio});
         navigate('/');
         return;
     }
@@ -47,7 +47,7 @@ const ProfilePage = () => {
 
             <button type='submit' className='py-3 bg-[#8F53CF] text-white rounded-md cursor-pointer'>Save</button>
         </form>
-        <img src={assets.logo_icon} alt="" className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} />
+        <img src={ authUser?.profilePic || assets.logo_icon} alt="" className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} />
       </div>
       
     </div>
